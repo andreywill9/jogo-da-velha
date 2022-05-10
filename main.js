@@ -54,6 +54,7 @@ function inserirSimbolo(simbolo, posicao) {
     if (jogoTerminado()) return;
     if (!posicaoLivre(posicao)) return;
     tabuleiro[posicao] = simbolo;
+   document.getElementById(`posicao${posicao}`).innerText = simbolo;
     if (empate()) {
         alert("O jogo empatou!!");
     }
@@ -82,6 +83,11 @@ function turnoDaIA() {
         }
     }
     inserirSimbolo(seletorIA, bestMove);
+}
+
+function turnoDoPlayer(posicao) {
+    inserirSimbolo(seletorPlayer, posicao);
+    turnoDaIA();
 }
 
 function minimax(tab, depth, isMaximizing) {
