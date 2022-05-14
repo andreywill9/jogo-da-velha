@@ -55,22 +55,25 @@ function limparTabuleiro() {
 function inserirSimbolo(simbolo, posicao) {
     if (jogoTerminado()) return;
     if (!posicaoLivre(posicao)) return;
+    tabuleiro[posicao] = simbolo;
     document.getElementById(`posicao${posicao}`).innerText = simbolo;
-    if (empate(tabuleiro)) {
-        alert("O jogo empatou!!");
-        limparTabuleiro();
-        return;
-    }
-    if (alguemVenceu()) {
-        if (combinacaoVencedora(tabuleiro, seletorPlayer)) {
-            alert("Parabéns!! Você venceu!!")
-        } else {
-            alert("Que pena, você perdeu :(")
+    new Promise(resolve => setTimeout(resolve, 100)).then(() => {
+        if (empate(tabuleiro)) {
+            alert("O jogo empatou!!");
+            limparTabuleiro();
+            return;
         }
-        limparTabuleiro();
-        return;
-    }
-    if (simbolo === seletorPlayer) turnoDaIA();
+        if (alguemVenceu()) {
+            if (combinacaoVencedora(tabuleiro, seletorPlayer)) {
+                alert("Parabéns!! Você venceu!!")
+            } else {
+                alert("Que pena, você perdeu :(")
+            }
+            limparTabuleiro();
+            return;
+        }
+        if (simbolo === seletorPlayer) turnoDaIA();
+    });
 }
 
 function turnoDaIA() {
